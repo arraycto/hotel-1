@@ -1,0 +1,31 @@
+body {
+    background-image: url("../images/index-background.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    float: none;
+    clear: both;
+    margin: 0;
+    border: 0;
+    font-family: "华文仿宋 Neue", Helvetica, Arial, sans-serif;
+}
+
+.fragment{
+    position: absolute;
+    left: 60%;
+    top: 10%;
+    width: 300px;
+    opacity: 0.6;
+}
+
+.fragment .login-fragment .login-title{
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.fragment .hide-fragment{
+    display: none;
+}
+
+.fragment .show-fragment{
+    display: block;
+}
