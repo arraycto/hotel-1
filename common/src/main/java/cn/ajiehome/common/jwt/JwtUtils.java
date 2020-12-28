@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 @Component
 public class JwtUtils {
-
+    private static JwtBeanBO jwtBeanBO = null;
 
     /**
      *  获取Token，签名由ID代替，形成动态签名
@@ -24,7 +24,6 @@ public class JwtUtils {
      * @return token
      */
     public String getToken(long autoDuration, JwtBeanBO jwtBeanBO){
-
         long outLong = System.currentTimeMillis() + autoDuration;
         Date outDate = new Date(outLong);
         Algorithm algorithm = Algorithm.HMAC256(jwtBeanBO.getId().toString());
@@ -40,5 +39,11 @@ public class JwtUtils {
                 .withIssuer(jwtBeanBO.getUserName())
                 .withExpiresAt(outDate)
                 .sign(algorithm);
+    }
+    public static JwtBeanBO getJwtBeanBO(){
+        return  jwtBeanBO;
+    }
+    public static void setJwtBeanBO(JwtBeanBO jwtBeanBO){
+        JwtUtils.jwtBeanBO = jwtBeanBO;
     }
 }

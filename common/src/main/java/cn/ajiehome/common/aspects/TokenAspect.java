@@ -3,6 +3,8 @@ package cn.ajiehome.common.aspects;
 import cn.ajiehome.common.annotations.AllowToken;
 import cn.ajiehome.common.enums.CodeType;
 import cn.ajiehome.common.exception.ApplicationException;
+import cn.ajiehome.common.jwt.JwtUtils;
+import cn.ajiehome.common.jwt.bo.JwtBeanBO;
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -59,6 +61,10 @@ public class TokenAspect {
 
             throw  new ApplicationException(CodeType.TOKEN_TIME_OUT);
         }
+        JwtBeanBO jwtBeanBO = new JwtBeanBO();
+        jwtBeanBO.setId(Long.parseLong(id));
+        jwtBeanBO.setUserName(userName);
+        JwtUtils.setJwtBeanBO(jwtBeanBO);
     }
     @After(value = "pointCut()&&@annotation(allowToken)")
     private void after(AllowToken allowToken){

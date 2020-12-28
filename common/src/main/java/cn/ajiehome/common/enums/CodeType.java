@@ -16,7 +16,9 @@ public enum CodeType {
     SERVICE_IO_ERROR(5003,"服务IO操作异常"),
     SERVICE_EMAIL_SEND_ERROR(5004,"邮件验证码发送异常"),
     SERVICE_EMAIL_NOT_FOUND(5005,"邮箱号码为空"),
-    TIME_POINTER_BACK(5006,"时间指针被回移动");
+    TIME_POINTER_BACK(5006,"时间指针被回移动"),
+    OK(200,"成功数据"),
+    DATE_SEARCH_DEFEAT(2003,"数据查询为空");
 
     private int code;
     private String msg;

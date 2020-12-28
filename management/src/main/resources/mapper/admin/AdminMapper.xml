@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ajiehome.management.admin.mapper.AdminMapper">
+	<select id="selectOrdersAll" resultType="cn.ajiehome.management.admin.entity.bo.AdminOrderInfoBO">
+		select
+			orders.create_date ,
+			orders.number ,
+			room.house_number ,
+			room.type ,
+			room.room_money ,
+			room.room_image ,
+			room.description ,
+			pay.pay_money ,
+			user.username ,
+			user.phone ,
+			user.sex
+		from orders
+		left join room on orders.room_id = room.id
+		left join user on orders.user_id = user.id
+		left join pay on orders.pay_id = pay.id
+	</select>
+</mapper>

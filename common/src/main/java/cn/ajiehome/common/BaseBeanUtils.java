@@ -6,6 +6,7 @@ import cn.ajiehome.common.config.GoWebMvcConfigurerAdapter;
 import cn.ajiehome.common.emails.NetEaseEmailCode;
 import cn.ajiehome.common.jwt.JwtUtils;
 import cn.ajiehome.common.swagger.SpringFoxConfig;
+import cn.ajiehome.common.utils.BaseUtils;
 import cn.ajiehome.common.utils.BodyUtils;
 import cn.ajiehome.common.utils.SnowFlake;
 
@@ -58,6 +59,11 @@ public abstract class BaseBeanUtils extends SpringBootServletInitializer {
 
     @Bean
     public GoWebMvcConfigurerAdapter getGoWebMvcConfigurerAdapter(){ return new GoWebMvcConfigurerAdapter(); }
+
+    @Bean
+    public BaseUtils getBaseUtils(){
+        return new BaseUtils();
+    }
 
 //    /**
 //     * mybatis-plus分页插件
