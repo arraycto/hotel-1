@@ -20,7 +20,7 @@ public class AdminOrderInfoBO {
      * 订单编号
      */
     @JsonSerialize(using= ToStringSerializer.class)
-    private Long number;
+    private Long ordersNumber;
     /**
      * 房间号
      */

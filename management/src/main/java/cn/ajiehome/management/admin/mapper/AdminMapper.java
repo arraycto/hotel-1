@@ -2,6 +2,8 @@ package cn.ajiehome.management.admin.mapper;
 
 import cn.ajiehome.management.admin.entity.Admin;
 import cn.ajiehome.management.admin.entity.bo.AdminOrderInfoBO;
+import cn.ajiehome.management.admin.entity.bo.AdminRoomBO;
+import cn.ajiehome.management.admin.entity.vo.AdminUpdateRoomVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -19,4 +21,17 @@ public interface AdminMapper extends BaseMapper<Admin> {
      * @return 订单信息
      */
     List<AdminOrderInfoBO> selectOrdersAll();
+
+    /**
+     * 查询所有房间状态
+     * @return 结果
+     */
+    List<AdminRoomBO> selectRoomAll();
+
+    /**
+     * 修改房间信息
+     * @param adminUpdateRoomVO 房间信息
+     * @return 结果
+     */
+    Integer updateRoomInfo(AdminUpdateRoomVO adminUpdateRoomVO);
 }

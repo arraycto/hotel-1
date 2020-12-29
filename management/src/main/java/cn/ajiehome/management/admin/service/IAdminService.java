@@ -3,6 +3,7 @@ package cn.ajiehome.management.admin.service;
 import cn.ajiehome.common.exception.entity.bo.ResultBO;
 import cn.ajiehome.management.admin.entity.bo.AdminLoginBO;
 import cn.ajiehome.management.admin.entity.bo.AdminOrderInfoBO;
+import cn.ajiehome.management.admin.entity.vo.AdminUpdateRoomVO;
 import cn.ajiehome.management.user.entity.bo.UserUpdateBO;
 import cn.ajiehome.management.user.entity.vo.UserInfoVO;
 
@@ -40,5 +41,22 @@ public interface IAdminService {
      */
     ResultBO<String> deleteUserOne(UserUpdateBO userUpdateBO);
 
+    /**
+     *  查询所有的订单
+     * @return 结果
+     */
     ResultBO<Object> selectOrdersAll();
+
+    /**
+     * 查询所有的房间
+     * @return 结果
+     */
+    ResultBO<Object> selectRoomAll();
+
+    /**
+     * 修改用户信息
+     * @param adminUpdateRoomVO 修改锡尼希
+     * @return 结果
+     */
+    ResultBO<String> updateRoomInfo(AdminUpdateRoomVO adminUpdateRoomVO);
 }

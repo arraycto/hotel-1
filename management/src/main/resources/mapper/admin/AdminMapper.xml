@@ -5,7 +5,7 @@
 	<select id="selectOrdersAll" resultType="cn.ajiehome.management.admin.entity.bo.AdminOrderInfoBO">
 		select
 			orders.create_date ,
-			orders.number ,
+			orders.orders_number ,
 			room.house_number ,
 			room.type ,
 			room.room_money ,
@@ -20,4 +20,29 @@
 		left join user on orders.user_id = user.id
 		left join pay on orders.pay_id = pay.id
 	</select>
+
+	<select id="selectRoomAll" resultType="cn.ajiehome.management.admin.entity.bo.AdminRoomBO">
+		select
+			room.room_number ,
+			room.house_number ,
+			room.type ,
+			room.room_status ,
+			room.room_money ,
+			room.room_image ,
+			room.description ,
+			orders.orders_number ,
+			user.username
+		from room
+		left join orders on room.id = orders.room_id
+		left join user on orders.user_id = user.id
+	</select>
+	<update id="updateRoomInfo" parameterType="cn.ajiehome.management.admin.entity.vo.AdminUpdateRoomVO">
+		update room
+		set
+			room.house_number = #{houseNumber} ,
+			room.room_image = #{roomImage} ,
+			room.description = #{description} ,
+			room.room_money = #{roomMoney}
+		where room.room_number= #{roomNumber}
+	</update>
 </mapper>
