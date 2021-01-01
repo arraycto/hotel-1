@@ -2,6 +2,7 @@ package cn.ajiehome.management.admin.controller;
 
 import cn.ajiehome.common.annotations.AllowToken;
 import cn.ajiehome.common.exception.entity.bo.ResultBO;
+import cn.ajiehome.management.admin.entity.bo.AddRoomBO;
 import cn.ajiehome.management.admin.entity.bo.AdminLoginBO;
 import cn.ajiehome.management.admin.entity.vo.AdminUpdateRoomVO;
 import cn.ajiehome.management.user.entity.bo.UserUpdateBO;
@@ -69,5 +70,11 @@ public class AdminController {
     public ResultBO<String> updateRoomInfo(@RequestBody AdminUpdateRoomVO adminUpdateRoomVO) {
         System.out.println(adminUpdateRoomVO);
         return adminService.updateRoomInfo(adminUpdateRoomVO);
+    }
+    @PostMapping("/add/room")
+    @AllowToken
+    @CrossOrigin
+    public ResultBO<String> addRoom(@RequestBody AddRoomBO addRoomBO){
+        return adminService.addRoom(addRoomBO);
     }
 }

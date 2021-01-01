@@ -1,6 +1,7 @@
 package cn.ajiehome.management.admin.service;
 
 import cn.ajiehome.common.exception.entity.bo.ResultBO;
+import cn.ajiehome.management.admin.entity.bo.AddRoomBO;
 import cn.ajiehome.management.admin.entity.bo.AdminLoginBO;
 import cn.ajiehome.management.admin.entity.bo.AdminOrderInfoBO;
 import cn.ajiehome.management.admin.entity.vo.AdminUpdateRoomVO;
@@ -59,4 +60,12 @@ public interface IAdminService {
      * @return 结果
      */
     ResultBO<String> updateRoomInfo(AdminUpdateRoomVO adminUpdateRoomVO);
+
+    /**
+     * 添加房间
+     * @param addRoomBO 房间信息
+     * @return 结果
+     */
+    ResultBO<String> addRoom(AddRoomBO addRoomBO);
+
 }

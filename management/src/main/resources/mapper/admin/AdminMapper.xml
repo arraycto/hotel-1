@@ -34,6 +34,7 @@
 			user.username
 		from room
 		left join orders on room.id = orders.room_id
+		and orders.create_date = (select max(create_date) from orders where orders.room_id = room.id)
 		left join user on orders.user_id = user.id
 	</select>
 	<update id="updateRoomInfo" parameterType="cn.ajiehome.management.admin.entity.vo.AdminUpdateRoomVO">
@@ -45,4 +46,9 @@
 			room.room_money = #{roomMoney}
 		where room.room_number= #{roomNumber}
 	</update>
+
+	<insert id="addRoom" parameterType="cn.ajiehome.management.admin.entity.Room">
+		insert into room(room.room_number,room.house_number,room.type,room.room_money,room.room_image,room.description)
+		values (#{roomNumber},#{houseNumber},#{type},#{roomMoney},#{roomImage},#{description})
+	</insert>
 </mapper>

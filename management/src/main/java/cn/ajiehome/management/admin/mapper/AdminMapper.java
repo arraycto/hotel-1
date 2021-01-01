@@ -1,6 +1,7 @@
 package cn.ajiehome.management.admin.mapper;
 
 import cn.ajiehome.management.admin.entity.Admin;
+import cn.ajiehome.management.admin.entity.Room;
 import cn.ajiehome.management.admin.entity.bo.AdminOrderInfoBO;
 import cn.ajiehome.management.admin.entity.bo.AdminRoomBO;
 import cn.ajiehome.management.admin.entity.vo.AdminUpdateRoomVO;
@@ -34,4 +35,11 @@ public interface AdminMapper extends BaseMapper<Admin> {
      * @return 结果
      */
     Integer updateRoomInfo(AdminUpdateRoomVO adminUpdateRoomVO);
+
+    /**
+     * 添加房间
+     * @param room 房间锡尼希
+     * @return 结果
+     */
+    Integer addRoom(Room room);
 }

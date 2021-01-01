@@ -5,7 +5,10 @@ import cn.ajiehome.common.exception.ApplicationException;
 import cn.ajiehome.common.exception.entity.bo.ResultBO;
 import cn.ajiehome.common.jwt.JwtUtils;
 import cn.ajiehome.common.jwt.bo.JwtBeanBO;
+import cn.ajiehome.common.utils.SnowFlake;
 import cn.ajiehome.management.admin.entity.Admin;
+import cn.ajiehome.management.admin.entity.Room;
+import cn.ajiehome.management.admin.entity.bo.AddRoomBO;
 import cn.ajiehome.management.admin.entity.bo.AdminLoginBO;
 import cn.ajiehome.management.admin.entity.bo.AdminOrderInfoBO;
 import cn.ajiehome.management.admin.entity.bo.AdminRoomBO;
@@ -38,6 +41,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Autowired
     private JwtUtils jwtUtils;
 
+    @Autowired
+    private SnowFlake snowFlake;
     @Autowired
     private UserMapper userMapper;
 
@@ -113,6 +118,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public ResultBO<Object> selectRoomAll() {
         checkAdmin();
         List<AdminRoomBO> adminRoomBOS = baseMapper.selectRoomAll();
+        System.err.println(adminRoomBOS);
         if (adminRoomBOS==null){
             throw new ApplicationException(CodeType.SERVICE_ERROR, "查询错误");
         }else {
@@ -128,6 +134,21 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             throw new ApplicationException(CodeType.SERVICE_ERROR, "修改失败");
         }else {
             return ResultBO.newResultBO(CodeType.OK, "修改成功");
+        }
+    }
+
+    @Override
+    public ResultBO<String> addRoom(AddRoomBO addRoomBO) {
+        checkAdmin();
+        System.out.println(addRoomBO);
+        Room room = new Room();
+        BeanUtils.copyProperties(addRoomBO,room);
+        room.setRoomNumber(snowFlake.nextId());
+        Integer integer = baseMapper.addRoom(room);
+        if (integer<1){
+            throw new ApplicationException(CodeType.SERVICE_ERROR, "添加失败");
+        }else {
+            return ResultBO.newResultBO(CodeType.OK, "添加成功");
         }
     }
 

@@ -3,5 +3,104 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.ajiehome.management.user.mapper.UserMapper">
 
+	<resultMap id="BaseResultMap" type="cn.ajiehome.management.user.entity.vo.RoomIdleVO">
+		<result property="roomNumber" column="room_number"/>
+		<result property="houseNumber" column="house_number"/>
+		<result property="type" column="type"/>
+		<result property="roomMoney" column="room_money"/>
+		<result property="roomImage" column="room_image"/>
+		<result property="description" column="description"/>
+		<collection property="talkRoomBOList" ofType="cn.ajiehome.management.user.entity.bo.TalkRoomBO">
+			<result property="username" column="username"/>
+			<result property="sex" column="sex"/>
+			<result property="createDate" column="create_date"/>
+			<result property="talkContent" column="talk_content"/>
+			<result property="talkNumber" column="talk_number"/>
+			<result property="ordersNumber" column="orders_number"/>
+		</collection>
 
+	</resultMap>
+
+	<select id="selectRoomAndTalk" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		room.room_number ,
+		room.house_number ,
+		room.type ,
+		room.room_money ,
+		room.room_image ,
+		room.description ,
+		user.username ,
+		user.sex ,
+		user.number ,
+		talk.create_date ,
+		talk.talk_content ,
+		talk.talk_number ,
+		orders.orders_number
+		from room
+		left join orders on room.id = orders.room_id
+		left join talk on orders.id = talk.orders_id
+		left join user on talk.user_id = user.id
+		<where>
+			room.room_status = 0
+			<if test="roomNumber != null">
+				and room.room_number = #{roomNumber}
+			</if>
+		</where>
+	</select>
+	<select id="selectOrders" resultType="cn.ajiehome.management.user.entity.vo.UserOrdersVO">
+		select orders.orders_number,
+			   orders.create_date,
+			   pay.pay_number,
+			   pay.pay_money,
+			   room.room_money,
+			   room.description,
+			   room.house_number,
+			   room.type,
+			   room.room_money
+		from orders
+				 left join user on orders.user_id = user.id
+				 left join room on orders.room_id = room.id
+				 left join pay on orders.pay_id = pay.id
+		where user.number = #{userNumber}
+	</select>
+
+	<select id="selectUserIdAndOrderId" resultType="cn.ajiehome.management.user.entity.bo.UserIdAndOrderIdBO">
+		select orders.id , orders.user_id,number from orders left join user on orders.user_id = user.id where orders_number = #{ordersNumber}
+	</select>
+
+	<insert id="insertTalk" parameterType="cn.ajiehome.management.user.entity.Talk">
+		insert into talk(talk_number,user_id,orders_id,talk_content) values(#{talkNumber},#{userId},#{ordersId},#{talkContent})
+	</insert>
+	
+	<select id="selectCarIdOrdersId" parameterType="cn.ajiehome.management.user.entity.bo.IsCarIdOrderIdBO" resultType="java.lang.Integer">
+		select count(orders.id) from orders
+		    left join user on orders.user_id = user.id
+		where user.number = #{number}
+		  and user.car_id = #{carId}
+		  and orders.orders_number = #{ordersNumber}
+	</select>
+
+	<insert id="insertPay" parameterType="cn.ajiehome.management.user.entity.Pay">
+		insert into pay(pay_number,pay_money) values(#{payNumber},#{payMoney})
+	</insert>
+
+	<update id="updateOrderPayId" parameterType="cn.ajiehome.management.user.entity.bo.UpdateOrderPayIdBO">
+		update orders,room
+		set orders.pay_id =
+		    (select pay.id from pay where pay.pay_number = #{payNumber}),
+			room.room_status = 0
+		where orders_number = #{ordersNumber} and orders.room_id = room.id
+	</update>
+
+	<select id="selectCreateOrdersId" parameterType="java.lang.Long" resultType="cn.ajiehome.management.user.entity.bo.UserIdAndOrderIdBO">
+		select room.id as id, user.id as user_id from room,user where room.room_number = #{roomNumber} and user.number = #{number}
+	</select>
+
+	<insert id="createOrders" parameterType="cn.ajiehome.management.user.entity.bo.CreateRoomIdBO">
+		insert into orders(orders.room_id , orders.user_id , orders.orders_number) values(#{roomId},#{userId},#{ordersNumber})
+	</insert>
+
+	<update id="updateRoomStatus" parameterType="java.lang.Long">
+		update room set room.room_status = 1 where room_number = #{roomNumber}
+	</update>
 </mapper>
